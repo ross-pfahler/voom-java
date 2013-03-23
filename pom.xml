@@ -7,14 +7,6 @@
   <description>Voom protocol for Java</description>
   
   <build>
-        <extensions>
-            <extension>
-                <groupId>org.springframework.build.aws</groupId>
-                <artifactId>org.springframework.build.aws.maven</artifactId>
-                <version>3.0.0.RELEASE</version>
-            </extension>
-        </extensions>
-    
   <plugins>
   <plugin>
                 <groupId>com.google.protobuf.tools</groupId>
@@ -93,42 +85,4 @@
         </pluginRepository>
     </pluginRepositories>
 
-    <repositories>
-        <repository>
-            <id>maven-s3-release-repo</id>
-            <name>S3 Release Repository</name>
-            <url>s3://livefyre-maven/release</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>maven-s3-snapshot-repo</id>
-            <name>S3 Snapshot Repository</name>
-            <url>s3://livefyre-maven/snapshot</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>   
-
-    <distributionManagement>
-        <repository>
-            <id>maven-s3-release-repo</id>
-            <name>S3 Release Repository</name>
-            <url>s3://livefyre-maven/release</url>
-        </repository>
-        <snapshotRepository>
-            <id>maven-s3-snapshot-repo</id>
-            <name>S3 Snapshot Repository</name>
-            <url>s3://livefyre-maven/snapshot</url>
-        </snapshotRepository>
-    </distributionManagement>
-  
 </project>
