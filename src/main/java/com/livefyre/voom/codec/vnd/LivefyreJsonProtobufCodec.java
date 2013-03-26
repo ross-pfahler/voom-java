@@ -39,7 +39,7 @@ public class LivefyreJsonProtobufCodec implements TypeCodec<JSONArray, Message> 
         JSONObject headers = new JSONObject();
         ContentType contentType = new ContentType();
         contentType.setPrimaryType("application");
-        contentType.setSubType("application/vnd.livefyre.protobuf+json");
+        contentType.setSubType("vnd.livefyre.protobuf+json");
         contentType.setParameter("proto", msg.getBody().getDescriptorForType().getFullName());
         contentType.setParameter("serial", "map+name");
         headers.put("Content-Type", contentType.toString());

@@ -35,7 +35,7 @@ public class JsonCodec implements TypeCodec <JSONArray, JSONObject> {
         }
     }
 
-    public VoomMessagePart<JSONObject> decodePartInternal(JSONArray data) throws JSONException {
+    private VoomMessagePart<JSONObject> decodePartInternal(JSONArray data) throws JSONException {
         JSONObject jsonHeaders = data.getJSONObject(0);
         HashMap<String, String> headers = new HashMap<String, String>();
         

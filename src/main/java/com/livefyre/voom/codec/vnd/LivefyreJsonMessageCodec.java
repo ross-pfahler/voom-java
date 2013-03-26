@@ -50,7 +50,7 @@ public class LivefyreJsonMessageCodec<T> extends MessageCodec<JSONArray, T> {
         StringWriter sw = new StringWriter();
         return container.write(sw).toString().getBytes();
     }
-
+    
     @Override
     public VoomMessage<T> decodeMessage(byte[] data) throws IOException {
         try {

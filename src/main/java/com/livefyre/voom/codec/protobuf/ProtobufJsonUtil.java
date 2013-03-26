@@ -20,11 +20,14 @@ public class ProtobufJsonUtil {
     }
 
     public JSONObject protobufToJson(Message input) throws JSONException {
-        JSONObject result = new JSONObject();        
+        JSONObject result = new JSONObject();
         Descriptor desc = input.getDescriptorForType();
         
         for (FieldDescriptor field:desc.getFields()) {
-            result.put(field.getFullName(), getFieldValue(input, field));
+            if (input.hasField(field)) {
+                result.put(field.getName(), getFieldValue(input, field));
+            }
+            
         }
         return result;
     }
@@ -48,11 +51,10 @@ public class ProtobufJsonUtil {
     }
     
     private Object getFieldValue(Message msg, FieldDescriptor field) throws JSONException {
-        Message.Builder builder = msg.newBuilderForType();
         if (field.isRepeated()) {
             return getRepeatedFieldValue(msg, field);
         }
-        return getFieldValueNotRepeated(msg, field, builder.getField(field));
+        return getFieldValueNotRepeated(msg, field, msg.getField(field));
     }
     
     public Message jsonToProtobuf(JSONObject input, Class<? extends Message> msgType) throws JSONException, ProtobufLoadError, ClassNotFoundException {
