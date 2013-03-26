@@ -8,10 +8,12 @@ import javax.mail.internet.ContentType;
 import javax.mail.internet.ParseException;
 
 public class VoomHeaders {
-    private Map<String, String> headers;
+    private Map<String, String> valueMap;
+    private Map<String, String> keyMap;
     
     public VoomHeaders() {
-        this.headers = new HashMap<String, String>();
+        this.valueMap = new HashMap<String, String>();
+        this.keyMap = new HashMap<String, String>();
     }
 
     public VoomHeaders(Map<String, String> headers) {
@@ -28,19 +30,34 @@ public class VoomHeaders {
     }
     
     public void put(String key, String value) {
-        headers.put(key.toLowerCase(), value);
+        if (value == null) {
+            return;
+        }
+        valueMap.put(key.toLowerCase(), value);
+        keyMap.put(key.toLowerCase(), key);
+    }
+    
+    public void putInt(String key, Integer value) {
+        if (value == null) {
+            return;
+        }
+        put(key, value.toString());
     }
     
     public String get(String key) {
-        return headers.get(key);
+        return valueMap.get(key.toLowerCase());
     }
     
     public Map<String, String> toMap() {
-        return new HashMap<String, String>(headers);
+        Map<String, String> result = new HashMap<String, String>();
+        for (Entry<String, String> entry:valueMap.entrySet()) {
+            result.put(keyMap.get(entry.getKey()), entry.getValue());
+        }
+        return result;
     }
     
     public ContentType contentType() {
-        String ctype = headers.get("content-type");
+        String ctype = get("content-type");
         if (ctype == null) {
             return null;
         }
@@ -53,10 +70,10 @@ public class VoomHeaders {
     }
  
     public String replyTo() {
-        return headers.get("reply_to");
+        return get("reply_to");
     }
     
     public String correlationId() {
-        return headers.get("correlation_id");
+        return get("correlation_id");
     }
 }

@@ -4,7 +4,7 @@ option java_package = "com.livefyre.voom.pb";
 option java_outer_classname = "test";
 
 message TestMessage {
-  required string aString = 1;
+  optional string aString = 1;
   optional int64 anInt = 2;
   optional TestComposedMessage composed = 3;
   optional TestEnum enumMe = 4;

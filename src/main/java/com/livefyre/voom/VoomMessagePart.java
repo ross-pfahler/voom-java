@@ -1,25 +1,34 @@
 package com.livefyre.voom;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import com.google.protobuf.Message;
-
-public class VoomMessagePart {
-	private Message message;
-	private VoomHeaders headers;
+public abstract class VoomMessagePart<T> {
+	protected T body;
+	protected VoomHeaders headers;
 	
-	public VoomMessagePart(Map<String, String> headers, Message message) {
-	    this.headers = new VoomHeaders(headers);
-	    this.message = message;
+	public VoomMessagePart(VoomHeaders headers, T body) {
+	    this.headers = headers;
+	    this.body = body;
 	}
-	
-   public VoomMessagePart(VoomMessagePart other) {
-       this(other.getHeaders().toMap(), 
-               other.message.newBuilderForType().mergeFrom(other.message).build());
+
+   public VoomMessagePart(Map<String, String> headers, T body) {
+       this(new VoomHeaders(headers), body);
     }
-	
-	public Message getMessage() {
-		return message;
+
+   public VoomMessagePart(T body) {
+       this(new HashMap<String, String>(), body);
+    }
+
+   protected abstract VoomMessagePart<T> clone();
+   
+//   {
+//       this(other.getHeaders().toMap(), 
+//               other.message.newBuilderForType().mergeFrom(other.message).build());
+//    }
+
+	public T getBody() {
+		return body;
 	}
 	
 	public VoomHeaders getHeaders() {
