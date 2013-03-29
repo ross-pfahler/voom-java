@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.livefyre</groupId>
   <artifactId>voom</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <name>voom-java</name>
   <description>Voom protocol for Java</description>
   
