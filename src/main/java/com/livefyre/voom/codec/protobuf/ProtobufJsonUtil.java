@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.protobuf.Descriptors.Descriptor;
+import com.google.protobuf.Descriptors.EnumValueDescriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor.JavaType;
 import com.google.protobuf.Message;
@@ -50,6 +51,9 @@ public class ProtobufJsonUtil {
     private Object getFieldValueNotRepeated(Message msg, FieldDescriptor field, Object value) throws JSONException {
         if (field.getJavaType() == JavaType.MESSAGE) {
             return protobufToJson((Message)value);
+        }
+        if (field.getJavaType() == JavaType.ENUM) {
+        	return ((EnumValueDescriptor) value).getNumber();
         }
         return value;
     }
