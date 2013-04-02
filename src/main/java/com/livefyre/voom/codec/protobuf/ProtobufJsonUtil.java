@@ -81,6 +81,11 @@ public class ProtobufJsonUtil {
                 continue;
             }
             
+            if (field.getJavaType() == JavaType.ENUM) {
+            	builder.setField(field, field.getEnumType().findValueByNumber((int)value));
+            	continue;
+            }
+            
             if (field.isRepeated()) {
                 JSONArray arrValue = (JSONArray) value;
                 for (int idx=0; idx<arrValue.length(); idx++) {
