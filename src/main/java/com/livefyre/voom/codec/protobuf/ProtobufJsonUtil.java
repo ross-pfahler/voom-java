@@ -24,9 +24,13 @@ public class ProtobufJsonUtil {
         Descriptor desc = input.getDescriptorForType();
         
         for (FieldDescriptor field:desc.getFields()) {
-            if (input.hasField(field)) {
-                result.put(field.getName(), getFieldValue(input, field));
+        	if (field.isRepeated() && input.getRepeatedFieldCount(field) != 0) {
+        		continue;
+        	}
+            if (!field.isRepeated() && !input.hasField(field)) {
+            	continue;
             }
+            result.put(field.getName(), getFieldValue(input, field));
             
         }
         return result;
