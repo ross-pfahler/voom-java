@@ -38,11 +38,10 @@ public class ProtobufJsonUtil {
     }
     
     private JSONArray getRepeatedFieldValue(Message msg, FieldDescriptor field) throws JSONException {
-        Message.Builder builder = msg.newBuilderForType();
         JSONArray result = new JSONArray();
         
-        for (int i=0; i<builder.getRepeatedFieldCount(field); i++) {
-            result.put(getFieldValueNotRepeated(msg, field, builder.getRepeatedField(field, i)));
+        for (int i=0; i<msg.getRepeatedFieldCount(field); i++) {
+            result.put(getFieldValueNotRepeated(msg, field, msg.getRepeatedField(field, i)));
         }
         
         return result;
@@ -89,7 +88,7 @@ public class ProtobufJsonUtil {
             if (field.isRepeated()) {
                 JSONArray arrValue = (JSONArray) value;
                 for (int idx=0; idx<arrValue.length(); idx++) {
-                    builder.setRepeatedField(field, idx, arrValue.get(idx));
+                    builder.addRepeatedField(field, arrValue.get(idx));
                 }
                 continue;
             }
