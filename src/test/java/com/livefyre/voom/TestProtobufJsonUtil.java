@@ -14,7 +14,7 @@ public class TestProtobufJsonUtil {
         ProtobufLoader loader = new ProtobufLoader("com.livefyre.voom.pb.");
         ProtobufJsonUtil pbJson = new ProtobufJsonUtil(loader);
         
-        JSONObject testJson = new JSONObject("{\"aString\": \"aValue\", \"composed\": {\"aString\": \"aComposedValue\"}}");
+        JSONObject testJson = new JSONObject("{\"aString\": \"aValue\", \"composed\": {\"aString\": \"aComposedValue\"}, \"repeatedComposed\": [{\"aString\": \"aRepeatedComposedValue\"}]}");
         pbJson.jsonToProtobuf(testJson, TestMessage.class);
     }
     
