@@ -118,18 +118,22 @@ public class ProtobufJsonUtil {
      * @throws ProtobufLoadError
      */
     public Object getValueFromJson(FieldDescriptor field, Object value) throws ClassNotFoundException, JSONException, ProtobufLoadError {
-    	// Composite fields must recursively call jsonToProtobuf
-        if (field.getJavaType() == JavaType.MESSAGE) {
-            Class<? extends Message> composedType = (Class<? extends Message>) loader.getProtoClass(field.getMessageType().getFullName());
-            return jsonToProtobuf((JSONObject)value, composedType);
+        switch (field.getJavaType()) {
+            case MESSAGE:
+                // Composite fields must recursively call jsonToProtobuf
+                Class<? extends Message> composedType = (Class<? extends Message>) loader.getProtoClass(field.getMessageType().getFullName());
+                return jsonToProtobuf((JSONObject)value, composedType);
+            case ENUM:
+             // Enum fields must fetch the EnumValueDesriptor for the integer input.
+                return field.getEnumType().findValueByNumber((int)value);
+            case INT:
+                return (int) value;
+            case LONG:
+                return (long) value;
+            case FLOAT:
+                return ((Double) value).floatValue();
+        default:
+            return value;
         }
-        
-        // Enum fields must fetch the EnumValueDesriptor for the integer input.
-        if (field.getJavaType() == JavaType.ENUM) {
-        	return field.getEnumType().findValueByNumber((int)value);
-        }
-        
-        // All other fields can just set their value.
-        return value;
     }
 }
